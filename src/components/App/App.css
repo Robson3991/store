@@ -1,10 +1,40 @@
-.container{
-    width: 1000px;
-    margin: 100px auto 0 auto;
+.container {
+  color: #222;
+  width: 1000px;
+  margin: 100px auto 0 auto;
 }
 
 .row {
-    padding: 10px;
-    border-bottom: 1px solid silver;
-    list-style: none;
+  padding: 10px;
+  border-bottom: 1px solid silver;
+  list-style: none;
 }
+
+/* PRODUCT START */
+
+.product {
+  display: flex;
+  align-items: center;
+}
+
+.product__button {
+  margin-left: auto;
+}
+
+/* PDODUCT END */
+
+/* BUTTON START */
+
+.button {
+  cursor: pointer;
+  border: 0;
+  padding: 6px 12px;
+  background-color: #ccc;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #aaa;
+}
+
+/* BUTTON END */
