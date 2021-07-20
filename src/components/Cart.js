@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { calculateSummary } from '../helpers/calculateSummary';
+import axios from 'axios';
 
 export const Cart = ({ cart, setCart }) => {
 
@@ -19,6 +20,34 @@ export const Cart = ({ cart, setCart }) => {
         });
       })
     }
+
+    useEffect(() => {
+      // console.log(cart);
+      const checkQuantity = () => {
+        cart.map(async item => {
+          try {
+            const check = await axios.post('/api/product/check', {
+              "pid": item.pid,
+              "quantity": item.count
+            });
+            console.log(check.data);
+          } catch(error) {
+            alert('Przekroczono limit');
+            setCart(prevState => {
+              return prevState.map(cartItem => {
+                if(cartItem.pid == item.pid) {
+                  item.count = item.min;
+                }
+                return item;
+              })
+            })
+          }
+
+        })
+      }
+
+      checkQuantity();
+    }, [cart]);
 
     return (
         <div className="cart">
