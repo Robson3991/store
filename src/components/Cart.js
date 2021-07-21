@@ -22,23 +22,21 @@ export const Cart = ({ cart, setCart }) => {
     }
 
     useEffect(() => {
-      // console.log(cart);
       const checkQuantity = () => {
         cart.map(async item => {
           try {
-            const check = await axios.post('/api/product/check', {
+            await axios.post('/api/product/check', {
               "pid": item.pid,
               "quantity": item.count
             });
-            console.log(check.data);
           } catch(error) {
             alert('Przekroczono limit');
             setCart(prevState => {
               return prevState.map(cartItem => {
                 if(cartItem.pid == item.pid) {
-                  item.count = item.min;
+                  cartItem.count = cartItem.min;
                 }
-                return item;
+                return cartItem;
               })
             })
           }
@@ -59,7 +57,7 @@ export const Cart = ({ cart, setCart }) => {
               <div className="cart__items">
                 {
                   cart.map(item => (
-                    <div className="cart__item" key={item.pid}>
+                    <div className="cart__item" key={`cart-${item.pid}`}>
                       <span>{`${item.name} - ${item.price} zł`}</span>
                       <div className="cart__buttons">
                         <button

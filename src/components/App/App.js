@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { Cart } from '../../components/Cart';
+import { Product } from '../Product';
 
 const App = () => {
   const [error, setError] = useState(false);
@@ -20,21 +21,6 @@ const App = () => {
     fetch();
   }, []);
 
-  const handleAddToCart = (item) => {
-    const isAdded = [...cart].filter(product => product.pid === item.pid);
-
-    if (isAdded.length) {
-      alert('produkt został już dodany do koszyka');
-      return false;
-    }
-
-    item.count = 1;
-
-    setCart(prevState => {
-      return [...prevState, item]
-    })
-  };
-
   if (error) return <div className="container">
     <p>Nie udało się pobrać danych</p>
   </div>
@@ -50,15 +36,12 @@ const App = () => {
         <ul>
         {
           items.map((item) => (
-            <div className="row product" key={item.pid}>
-              <span>{item.name} - {item.price} zł</span>
-                <button
-                  className="button product__button"
-                  onClick={() => handleAddToCart(item)}
-                >
-                  Dodaj do koszyka
-                </button>
-            </div>
+            <Product
+              item={item}
+              cart={cart}
+              setCart={setCart}
+              key={`app-${item.pid}`}
+            />
           ))
         }
       </ul>

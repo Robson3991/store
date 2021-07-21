@@ -23,8 +23,11 @@
   align-items: center;
 }
 
-.product__button {
-  margin-left: auto;
+.product__input {
+  margin: 0 15px 0 auto;
+  padding: 4px 10px;
+  max-width: 80px;
+  text-align: center;
 }
 
 /* PDODUCT END */
