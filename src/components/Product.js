@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export const Product = ({ item, setCart }) => {
 
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = async (item) => {
 
     const itemCopy = {...item};
 
-    if (isAdded.length) {
+    if (isAdded) {
       alert('produkt został już dodany do koszyka');
       return false;
     }
-
+    
     if (!!quantity < 1 || isNaN(quantity)) {
       setQuantity(1);
       itemCopy.count = 1;
     } else {
       itemCopy.count = quantity;
+    }
+
+    try {
+      await axios.post('/api/product/check', {
+        "pid": itemCopy.pid,
+        "quantity": itemCopy.count
+      });
+    } catch(error) {
+      alert('Przekroczono limit');
+      itemCopy.count = itemCopy.min;
     }
 
     setIsAdded(true);
